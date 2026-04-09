@@ -1,0 +1,9 @@
+# How to enable SPI mode for SD Card
+First what we need to do is to get the chip select pin to be high
+Then after the chip select pin is high we send 80 bytes of 0xff 
+Then we can begin to send the actual SD Card commands
+
+# SD Card commands
+They are listed in the physical specification whcih i have downloaded,
+however it seems that all of the command numbers are numbered from bits
+in the command field and the arguements are listed in the document. 
