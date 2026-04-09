@@ -38,12 +38,12 @@ uint8_t crc7(uint8_t *data, int len) {
 }
 
 
-uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument)
+uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument, uint8_t* additionalOuput)
 {
   SPI_Transfer(indexCMD);
   for(int index = 0; index < 4; index++)
   {
-    SPI_Transfer(argument>>(8*(4-index));
+    SPI_Transfer(argument>>(8*(4-index)));
   }
   uint8_t packet[5];
   packet[0] = indexCMD;
@@ -59,39 +59,48 @@ uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument)
     response = SPI_Transfer(0xFF);
     if(response != 0xFF) break;
   }
+  if(indexCMD == CM8 && addidtionalOutput != NULL){
+    for(int index = 0; index < 4; index++){
+      additionalOuput[index] = SPI_Transfer(0xFF);
+    }
+  }
 
   return response;
 
 }
 
-void SD_Init()
+uint8_t SD_Init()
 {
   SPI_Initialize();
   SPCR |= (1<<SPI2X) | (1<<SPR1);
-  TC_SS_HIGH();
+  TC_SS_LOW();
+
   for(int index = 0; index < 80; index++)
   {
     SPI_Transfer(0xFF);
+  int8_t response = Send_SDC_CMD(CM0, 0x0, NULL);
+  if(response){
+    return response;
   }
-  TC_SS_LOW();
-  uint8_t response = Send_SDC_CM0();
-  
-  response = Send_SDC_CMD(CM0, 0);
-  response = Send_SDC_CMD(CM8, 0x000001AA);
+  uint8_t fourbyte_response[4] = {0,0,0,0};
+  response = Send_SDC_CMD(CM8, 0x000001AA, fourbyte_response);
+  if (response) {
+      return response;
+    }
   uint8_t timeout_counter = 0;
   do {
-    Send_SDC_CMD(CM55, 0);
-    response = Send_SDC_CMD(ACM41, 0x40000000);
+    Send_SDC_CMD(CM55, 0, NULL);
+    response = Send_SDC_CMD(ACM41, 0x40000000, NULL);
     if (timeout_counter > 10)
       break;
     timeout_counter++;
   } while(response == 0x01);
 
   if (response == 0x00){
-    Send_SDC_CMD(CM58, 0);
+    Send_SDC_CMD(CM58, 0, NULL);
   }
 
-  response = Send_SDC_CMD(16 | (1<<6), 0x00000200); 
+  response = Send_SDC_CMD(16 | (1<<6), 0x00000200, NULL); 
 
   SPCR &= ~(SPR1);
   TC_SS_HIGH();
@@ -102,7 +111,7 @@ void SD_Init()
 uint8_t SDC_Read_Block(uint32_t address, uint8_t* readBuffer, uint16_t* crc_checksum)
 {
   TC_SS_LOW();
-  uint8_t response = Send_SDC_CMD(CM17, address);
+  uint8_t response = Send_SDC_CMD(CM17, address, NULL);
   if(!response){
     SD_ERROR = CM17;
     return response;
@@ -137,8 +146,13 @@ uint8_t SDC_Read_Block(uint32_t address, uint8_t* readBuffer, uint16_t* crc_chec
 
 uint8_t SDC_Write_Block(uint32_t address, uint8_t* writeBuffer)
 {
+  uint16_t crc_checksum = crc16(writeBuffer, BLOCK_LENGTH);
   TC_SS_LOW();
-  uint8_t response = Send_SDC_CMD(CM24, address);
+  uint8_t response = Send_SDC_CMD(CM24, address, NULL);
+  if(response) {
+      SD_ERROR = CM24;
+      return response;
+    }
 
   for(int tries = 0; tries < 15; tries++) {
     response = SPI_Transfer(0xFF);
@@ -149,8 +163,8 @@ uint8_t SDC_Write_Block(uint32_t address, uint8_t* writeBuffer)
   for(uint16_t byteIndex = 0; byteIndex < BLOCK_LENGTH, byteIndex) {
     writeBuffer[byteIndex] = SPI_Transfer(0xFF);
   }
-  uint16_t crc_checksum = (SPI_Transfer(0xFF) << 8);
-  crc_checksum |= SPI_Transfer(0xFF)
+  SPI_Transfer(crc_checksum);
+  SPI_Transfer(crc_checksum>>8);
 
   response = SPI_Transfer(0xFF);
 
@@ -161,9 +175,9 @@ uint8_t SDC_Write_Block(uint32_t address, uint8_t* writeBuffer)
     }
   }
 
-
+  
 
   TC_SS_HIGH();
 
-  return 0;
+  return response;
 }
