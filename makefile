@@ -17,11 +17,12 @@ BOARD        = USBKEY
 F_CPU        = 8000000
 F_USB        = $(F_CPU)
 OPTIMIZATION = s
-TARGET       = src/main.c
-SRC          = $(TARGET).c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
+TARGET       = main
+SRC          = $(TARGET).c Descriptors.c Lib/DataflashManager.c Lib/SCSI.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS)
 LUFA_PATH    = ./lufa/LUFA
-CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig
+CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/
 LD_FLAGS     =
+
 
 # Default target
 all:
