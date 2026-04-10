@@ -1,7 +1,7 @@
 #include "Lib/SDcard.h" 
 #include "SPI.h"
-#include <cstdint>
 #include <stdint.h>
+#include <stdio.h>
 #define UNINITIALIZED 0
 uint8_t SD_STATE = UNINITIALIZED;
 
@@ -38,7 +38,7 @@ uint8_t crc7(uint8_t *data, int len) {
 }
 
 
-uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument, uint8_t* additionalOuput)
+uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument, uint8_t* additionalOutput)
 {
   SPI_Transfer(indexCMD);
   for(int index = 0; index < 4; index++)
@@ -59,9 +59,9 @@ uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument, uint8_t* additionalOup
     response = SPI_Transfer(0xFF);
     if(response != 0xFF) break;
   }
-  if(indexCMD == CM8 && addidtionalOutput != NULL){
+  if(indexCMD == (CM8) && additionalOutput != NULL){
     for(int index = 0; index < 4; index++){
-      additionalOuput[index] = SPI_Transfer(0xFF);
+      additionalOutput[index] = SPI_Transfer(0xFF);
     }
   }
 
@@ -69,7 +69,7 @@ uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument, uint8_t* additionalOup
 
 }
 
-uint8_t SD_Init()
+uint8_t SD_Init(void)
 {
   SPI_Initialize();
   SPCR |= (1<<SPI2X) | (1<<SPR1);
@@ -163,7 +163,7 @@ uint8_t SDC_Write_Block(uint32_t address, uint8_t* writeBuffer)
       break;
   }
 
-  for(uint16_t byteIndex = 0; byteIndex < BLOCK_LENGTH; byteIndex) {
+  for(uint16_t byteIndex = 0; byteIndex < BLOCK_LENGTH; byteIndex++) {
     writeBuffer[byteIndex] = SPI_Transfer(0xFF);
   }
   SPI_Transfer(crc_checksum);
