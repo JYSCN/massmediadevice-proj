@@ -1,8 +1,7 @@
 [
   {
-    "file": "main.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -33,21 +32,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/main.d",
-      "main.c",
       "-o",
-      "obj/main.o"
+      "obj/main.o",
+      "main.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/main.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/main.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/main.o"
   },
   {
-    "file": "Descriptors.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -78,21 +73,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/Descriptors.d",
-      "Descriptors.c",
       "-o",
-      "obj/Descriptors.o"
+      "obj/Descriptors.o",
+      "Descriptors.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/Descriptors.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/Descriptors.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/Descriptors.o"
   },
   {
-    "file": "Lib/DataflashManager.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -123,21 +114,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/DataflashManager.d",
-      "Lib/DataflashManager.c",
       "-o",
-      "obj/DataflashManager.o"
+      "obj/DataflashManager.o",
+      "Lib/DataflashManager.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/DataflashManager.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/Lib/DataflashManager.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/DataflashManager.o"
   },
   {
-    "file": "Lib/SCSI.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -168,21 +155,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/SCSI.d",
-      "Lib/SCSI.c",
       "-o",
-      "obj/SCSI.o"
+      "obj/SCSI.o",
+      "Lib/SCSI.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/SCSI.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/Lib/SCSI.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/SCSI.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -213,21 +196,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/HIDParser.d",
-      "./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c",
       "-o",
-      "obj/HIDParser.o"
+      "obj/HIDParser.o",
+      "./lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/HIDParser.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Common/HIDParser.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/HIDParser.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -258,21 +237,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/Device_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c",
       "-o",
-      "obj/Device_AVR8.o"
+      "obj/Device_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/Device_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/Device_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -303,21 +278,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/EndpointStream_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c",
       "-o",
-      "obj/EndpointStream_AVR8.o"
+      "obj/EndpointStream_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/EndpointStream_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/EndpointStream_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/EndpointStream_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -348,21 +319,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/Endpoint_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c",
       "-o",
-      "obj/Endpoint_AVR8.o"
+      "obj/Endpoint_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/Endpoint_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/Endpoint_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/Endpoint_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -393,21 +360,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/Host_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c",
       "-o",
-      "obj/Host_AVR8.o"
+      "obj/Host_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/Host_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/Host_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/Host_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -438,21 +401,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/PipeStream_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c",
       "-o",
-      "obj/PipeStream_AVR8.o"
+      "obj/PipeStream_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/PipeStream_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/PipeStream_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/PipeStream_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -483,21 +442,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/Pipe_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c",
       "-o",
-      "obj/Pipe_AVR8.o"
+      "obj/Pipe_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/Pipe_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/Pipe_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/Pipe_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -528,21 +483,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/USBController_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c",
       "-o",
-      "obj/USBController_AVR8.o"
+      "obj/USBController_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/USBController_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/USBController_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/USBController_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -573,21 +524,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/USBInterrupt_AVR8.d",
-      "./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c",
       "-o",
-      "obj/USBInterrupt_AVR8.o"
+      "obj/USBInterrupt_AVR8.o",
+      "./lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/USBInterrupt_AVR8.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/AVR8/USBInterrupt_AVR8.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/USBInterrupt_AVR8.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/ConfigDescriptors.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -618,21 +565,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/ConfigDescriptors.d",
-      "./lufa/LUFA/Drivers/USB/Core/ConfigDescriptors.c",
       "-o",
-      "obj/ConfigDescriptors.o"
+      "obj/ConfigDescriptors.o",
+      "./lufa/LUFA/Drivers/USB/Core/ConfigDescriptors.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/ConfigDescriptors.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/ConfigDescriptors.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/ConfigDescriptors.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -663,21 +606,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/DeviceStandardReq.d",
-      "./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c",
       "-o",
-      "obj/DeviceStandardReq.o"
+      "obj/DeviceStandardReq.o",
+      "./lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/DeviceStandardReq.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/DeviceStandardReq.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/DeviceStandardReq.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/Events.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -708,21 +647,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/Events.d",
-      "./lufa/LUFA/Drivers/USB/Core/Events.c",
       "-o",
-      "obj/Events.o"
+      "obj/Events.o",
+      "./lufa/LUFA/Drivers/USB/Core/Events.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/Events.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/Events.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/Events.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/HostStandardReq.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -753,21 +688,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/HostStandardReq.d",
-      "./lufa/LUFA/Drivers/USB/Core/HostStandardReq.c",
       "-o",
-      "obj/HostStandardReq.o"
+      "obj/HostStandardReq.o",
+      "./lufa/LUFA/Drivers/USB/Core/HostStandardReq.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/HostStandardReq.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/HostStandardReq.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/HostStandardReq.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Core/USBTask.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -798,21 +729,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/USBTask.d",
-      "./lufa/LUFA/Drivers/USB/Core/USBTask.c",
       "-o",
-      "obj/USBTask.o"
+      "obj/USBTask.o",
+      "./lufa/LUFA/Drivers/USB/Core/USBTask.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/USBTask.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Core/USBTask.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/USBTask.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/AudioClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -843,21 +770,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/AudioClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/AudioClassDevice.c",
       "-o",
-      "obj/AudioClassDevice.o"
+      "obj/AudioClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/AudioClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/AudioClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/AudioClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/AudioClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/CCIDClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -888,21 +811,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/CCIDClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/CCIDClassDevice.c",
       "-o",
-      "obj/CCIDClassDevice.o"
+      "obj/CCIDClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/CCIDClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/CCIDClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/CCIDClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/CCIDClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/CDCClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -933,21 +852,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/CDCClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/CDCClassDevice.c",
       "-o",
-      "obj/CDCClassDevice.o"
+      "obj/CDCClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/CDCClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/CDCClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/CDCClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/CDCClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/HIDClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -978,21 +893,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/HIDClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/HIDClassDevice.c",
       "-o",
-      "obj/HIDClassDevice.o"
+      "obj/HIDClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/HIDClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/HIDClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/HIDClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/HIDClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/MassStorageClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1023,21 +934,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/MassStorageClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/MassStorageClassDevice.c",
       "-o",
-      "obj/MassStorageClassDevice.o"
+      "obj/MassStorageClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/MassStorageClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/MassStorageClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/MassStorageClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/MassStorageClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/MIDIClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1068,21 +975,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/MIDIClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/MIDIClassDevice.c",
       "-o",
-      "obj/MIDIClassDevice.o"
+      "obj/MIDIClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/MIDIClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/MIDIClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/MIDIClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/MIDIClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/PrinterClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1113,21 +1016,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/PrinterClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/PrinterClassDevice.c",
       "-o",
-      "obj/PrinterClassDevice.o"
+      "obj/PrinterClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/PrinterClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/PrinterClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/PrinterClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/PrinterClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Device/RNDISClassDevice.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1158,21 +1057,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/RNDISClassDevice.d",
-      "./lufa/LUFA/Drivers/USB/Class/Device/RNDISClassDevice.c",
       "-o",
-      "obj/RNDISClassDevice.o"
+      "obj/RNDISClassDevice.o",
+      "./lufa/LUFA/Drivers/USB/Class/Device/RNDISClassDevice.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/RNDISClassDevice.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Device/RNDISClassDevice.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/RNDISClassDevice.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/AndroidAccessoryClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1203,21 +1098,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/AndroidAccessoryClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/AndroidAccessoryClassHost.c",
       "-o",
-      "obj/AndroidAccessoryClassHost.o"
+      "obj/AndroidAccessoryClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/AndroidAccessoryClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/AndroidAccessoryClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/AndroidAccessoryClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/AndroidAccessoryClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/AudioClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1248,21 +1139,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/AudioClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/AudioClassHost.c",
       "-o",
-      "obj/AudioClassHost.o"
+      "obj/AudioClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/AudioClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/AudioClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/AudioClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/AudioClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/CDCClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1293,21 +1180,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/CDCClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/CDCClassHost.c",
       "-o",
-      "obj/CDCClassHost.o"
+      "obj/CDCClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/CDCClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/CDCClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/CDCClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/CDCClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/HIDClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1338,21 +1221,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/HIDClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/HIDClassHost.c",
       "-o",
-      "obj/HIDClassHost.o"
+      "obj/HIDClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/HIDClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/HIDClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/HIDClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/HIDClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/MassStorageClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1383,21 +1262,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/MassStorageClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/MassStorageClassHost.c",
       "-o",
-      "obj/MassStorageClassHost.o"
+      "obj/MassStorageClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/MassStorageClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/MassStorageClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/MassStorageClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/MassStorageClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/MIDIClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1428,21 +1303,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/MIDIClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/MIDIClassHost.c",
       "-o",
-      "obj/MIDIClassHost.o"
+      "obj/MIDIClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/MIDIClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/MIDIClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/MIDIClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/MIDIClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/PrinterClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1473,21 +1344,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/PrinterClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/PrinterClassHost.c",
       "-o",
-      "obj/PrinterClassHost.o"
+      "obj/PrinterClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/PrinterClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/PrinterClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/PrinterClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/PrinterClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/RNDISClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1518,21 +1385,17 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/RNDISClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/RNDISClassHost.c",
       "-o",
-      "obj/RNDISClassHost.o"
+      "obj/RNDISClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/RNDISClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/RNDISClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/RNDISClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/RNDISClassHost.o"
   },
   {
-    "file": "./lufa/LUFA/Drivers/USB/Class/Host/StillImageClassHost.c",
     "arguments": [
-      "avr-gcc",
+      "/usr/bin/avr-gcc",
       "-c",
       "-pipe",
       "-gdwarf-2",
@@ -1563,15 +1426,12 @@
       "-DARCH=ARCH_AVR8",
       "-DBOARD=BOARD_USBKEY",
       "-DF_USB=8000000UL",
-      "-MMD",
-      "-MP",
-      "-MF",
-      "obj/StillImageClassHost.d",
-      "./lufa/LUFA/Drivers/USB/Class/Host/StillImageClassHost.c",
       "-o",
-      "obj/StillImageClassHost.o"
+      "obj/StillImageClassHost.o",
+      "./lufa/LUFA/Drivers/USB/Class/Host/StillImageClassHost.c"
     ],
-    "directory": "/home/shottyman/git/resume-product",
-    "output": "obj/StillImageClassHost.o"
+    "directory": "/home/shottyman/github/massmediadevice-proj",
+    "file": "/home/shottyman/github/massmediadevice-proj/lufa/LUFA/Drivers/USB/Class/Host/StillImageClassHost.c",
+    "output": "/home/shottyman/github/massmediadevice-proj/obj/StillImageClassHost.o"
   }
 ]
