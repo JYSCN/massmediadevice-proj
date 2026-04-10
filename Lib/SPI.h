@@ -1,7 +1,7 @@
 #ifndef _SPI_H_
 #define _SPI_H_
 #include <avr/io.h>
-#include <avr/stdint.h>
+#include <stdint.h>
 #define DD_MOSI 2
 #define DD_SCK 1
 #define SS 6
