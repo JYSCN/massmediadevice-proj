@@ -1,4 +1,4 @@
-#include "Lib/SDcard.h"
+#include "Lib/SDcard.h" 
 #include "SPI.h"
 #include <cstdint>
 #include <stdint.h>
@@ -78,6 +78,7 @@ uint8_t SD_Init()
   for(int index = 0; index < 80; index++)
   {
     SPI_Transfer(0xFF);
+  }
   int8_t response = Send_SDC_CMD(CM0, 0x0, NULL);
   if(response){
     return response;
@@ -116,8 +117,8 @@ uint8_t SDC_Read_Block(uint32_t address, uint8_t* readBuffer, uint16_t* crc_chec
     SD_ERROR = CM17;
     return response;
   }
-
-  for(int tries = 0; tries < 15; tries++)
+  int tries = 0;
+  for(; tries < 15; tries++)
   {
     response = SPI_Transfer(0xFF); //Data token
     if(response != 0xFF)
@@ -127,19 +128,21 @@ uint8_t SDC_Read_Block(uint32_t address, uint8_t* readBuffer, uint16_t* crc_chec
     SD_ERROR = TIMEOUT; 
     return response;
   }
-  else if(reponse != 0xFE) {
+  else if(response != 0xFE) {
     SD_ERROR = MID_TRANSFER_ERR; 
     return response;
   }
   //Response should be 0xFE
-  for(int byteIndex = 0; byteIndex < BLOCK_LENGTH, byteIndex)
+  for(int byteIndex = 0; byteIndex < BLOCK_LENGTH; byteIndex++)
   {
     readBuffer[byteIndex] = SPI_Transfer(0xFF);
   }
+
+
   *crc_checksum = (SPI_Transfer(0xFF) << 8);
-  *crc_checksum |= (SPI_transfer(0xFF)); // Right now just checking if it works no need to send CRC back
+  *crc_checksum |= (SPI_Transfer(0xFF)); // Right now just checking if it works no need to send CRC back
   
-  
+ 
   TC_SS_HIGH();
   return response;
 }
@@ -160,7 +163,7 @@ uint8_t SDC_Write_Block(uint32_t address, uint8_t* writeBuffer)
       break;
   }
 
-  for(uint16_t byteIndex = 0; byteIndex < BLOCK_LENGTH, byteIndex) {
+  for(uint16_t byteIndex = 0; byteIndex < BLOCK_LENGTH; byteIndex) {
     writeBuffer[byteIndex] = SPI_Transfer(0xFF);
   }
   SPI_Transfer(crc_checksum);
