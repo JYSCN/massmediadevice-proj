@@ -8,7 +8,7 @@
 
 #define TC_SS_LOW()   PORTE &= ~(1<<SS)
 #define TC_SS_HIGH()  PORTE |= (1<<SS)
-void SPI_Initialize();
+void SPI_Initialize(void);
 uint8_t SPI_Transfer(uint8_t data);
 
 #endif

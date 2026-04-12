@@ -33,8 +33,11 @@
  *  Main source file for the VirtualSerialMassStorage demo. This file contains the main tasks of
  *  the demo and is responsible for the initial application hardware configuration.
  */
-
 #include "VirtualSerialMassStorage.h"
+#include "Lib/SDcard.h"
+#include "Lib/SPI.h"
+#include <stdio.h>
+
 
 /** LUFA CDC Class driver interface configuration and state information. This structure is
  *  passed to all CDC Class driver functions, so that multiple instances of the same class
@@ -91,6 +94,86 @@ USB_ClassInfo_MS_Device_t Disk_MS_Interface =
 			},
 	};
 
+#define BLOCK_LENGTH 512  // if not already defined in SDcard.h
+#define PRINT(fmt, ...) do { printf(fmt, ##__VA_ARGS__); CDC_Device_Flush(&VirtualSerial_CDC_Interface); } while(0)
+static uint8_t sd_block_buffer[BLOCK_LENGTH];
+
+void Test_Read_Block(uint32_t address) {
+
+    uint16_t crc = 0;
+
+    printf("Reading block at address 0x%08lX...\r\n", address);
+
+    uint8_t response = SDC_Read_Block(address, sd_block_buffer, &crc);
+
+    if (response != 0xFE) {
+        printf("Read failed! Response: 0x%02X  SD_ERROR: 0x%02X\r\n", response, SD_ERROR);
+        return;
+    }
+
+    printf("CRC: 0x%04X\r\n", crc);
+    printf("Data:\r\n");
+
+    // Print hex dump — 16 bytes per row
+    for (int i = 0; i < BLOCK_LENGTH; i++) {
+        if (i % 16 == 0)
+            printf("\r\n%04X: ", i);   // row address
+        printf("%02X ", sd_block_buffer[i]);
+    }
+
+    printf("\r\n--- End of Block ---\r\n");
+
+    // Flush so data actually goes out
+    CDC_Device_Flush(&VirtualSerial_CDC_Interface);
+}
+
+// Read a string from USB serial until newline
+static void USB_ReadLine(char *buf, uint8_t maxlen) {
+    uint8_t i = 0;
+    while (i < maxlen - 1) {
+        // Wait for a byte
+        while (!CDC_Device_BytesReceived(&VirtualSerial_CDC_Interface)) {
+            CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
+            USB_USBTask();
+        }
+        char c = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
+
+        // Echo character back so user can see what they type
+        printf("%c", c);
+        CDC_Device_Flush(&VirtualSerial_CDC_Interface);
+
+        if (c == '\r' || c == '\n') break;
+        buf[i++] = c;
+    }
+    buf[i] = '\0';
+}
+
+void SD_CommandLoop(void) {
+    char input[16];
+
+    // Reset card state before every command
+    TC_SS_HIGH();
+    for (int i = 0; i < 8; i++)
+        SPI_Transfer(0xFF);   // 8 dummy bytes to fully flush card state
+
+    printf("\r\nEnter block address (hex, e.g. 0A3F): ");
+    CDC_Device_Flush(&VirtualSerial_CDC_Interface);
+
+    USB_ReadLine(input, sizeof(input));
+
+    uint32_t address = 0;
+    if (sscanf(input, "%lx", &address) != 1) {
+        printf("\r\nInvalid address.\r\n");
+        CDC_Device_Flush(&VirtualSerial_CDC_Interface);
+        return;
+    }
+
+    printf("\r\n");
+    Test_Read_Block(address);
+}
+
+
+
 /** Standard file stream for the CDC interface when set up, so that the virtual CDC COM port can be
  *  used like any regular character stream in the C APIs.
  */
@@ -102,25 +185,48 @@ static FILE USBSerialStream;
  */
 int main(void)
 {
-	SetupHardware();
+  clock_prescale_set(clock_div_1);
+    SetupHardware();
 
-	/* Create a regular character stream for the interface so that it can be used with the stdio.h functions */
-	CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &USBSerialStream);
+    CDC_Device_CreateStream(&VirtualSerial_CDC_Interface, &USBSerialStream);
+    stdout = &USBSerialStream;
+    LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+    GlobalInterruptEnable();
 
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
-	GlobalInterruptEnable();
+    // Run SD init before USB — results stored in SD_Debug
+    uint8_t sd_result = SD_Init();
 
-	for (;;)
-	{
-		CheckJoystickMovement();
+    // Wait for USB to connect
+    while (USB_DeviceState != DEVICE_STATE_Configured) {
+        CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
+        USB_USBTask();
+    }
 
-		/* Must throw away unused bytes from the host, or it will lock up while waiting for the device */
-		CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
+    // Small delay to let the terminal open
+    _delay_ms(500);
 
-		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
-		MS_Device_USBTask(&Disk_MS_Interface);
-		USB_USBTask();
-	}
+    // Now dump everything we captured
+    PRINT("=== SD Init Debug ===\r\n");
+    PRINT("CMD0:   0x%02X\r\n", SD_Debug.cmd0);
+    PRINT("CMD8:   0x%02X  OCR: %02X %02X %02X %02X\r\n",
+        SD_Debug.cmd8,
+        SD_Debug.cmd8_ocr[0], SD_Debug.cmd8_ocr[1],
+        SD_Debug.cmd8_ocr[2], SD_Debug.cmd8_ocr[3]);
+    PRINT("ACMD41: 0x%02X  tries: %d\r\n", SD_Debug.acmd41, SD_Debug.acmd41_tries);
+    PRINT("CMD58:  0x%02X  SDHC: %d  OCR: %02X %02X %02X %02X\r\n",
+        SD_Debug.cmd58, SD_IS_SDHC,
+        SD_Debug.cmd58_ocr[0], SD_Debug.cmd58_ocr[1],
+        SD_Debug.cmd58_ocr[2], SD_Debug.cmd58_ocr[3]);
+    PRINT("CMD16:  0x%02X\r\n", SD_Debug.cmd16);
+    PRINT("Init result: 0x%02X\r\n", sd_result);
+    PRINT("=====================\r\n");
+    CDC_Device_Flush(&VirtualSerial_CDC_Interface);
+
+    for (;;) {
+        SD_CommandLoop();
+        CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
+        USB_USBTask();
+    }
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
@@ -147,19 +253,12 @@ void SetupHardware(void)
 
 	/* Hardware Initialization */
 	LEDs_Init();
-	Joystick_Init();
-	Dataflash_Init();
 	USB_Init();
 
 	/* Check if the Dataflash is working, abort if not */
-	if (!(DataflashManager_CheckDataflashOperation()))
-	{
-		LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
-		for(;;);
-	}
 
 	/* Clear Dataflash sector protections, if enabled */
-	DataflashManager_ResetDataflashProtections();
+
 }
 
 /** Checks for changes in the position of the board joystick, sending strings to the host upon each change. */
