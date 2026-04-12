@@ -6,4 +6,21 @@ Then we can begin to send the actual SD Card commands
 # SD Card commands
 They are listed in the physical specification whcih i have downloaded,
 however it seems that all of the command numbers are numbered from bits
-in the command field and the arguements are listed in the document. 
+in the command field and the arguements are listed in the document.
+
+# SCSI Read Write
+
+Basically how the SCSI would work is that we are provided a starting block address,
+With the block address we are also provided a total number of blocks with this we 
+write n blocks completely directly reading from the USB endpoints to have the data 
+read out and written out. While we might be able to do the RAM method reading we might
+not be able to do the same for writing. Or perhaps it might be more efficient to do it
+the same way that it is done with the dataflash library which is bufferless and directly 
+transfers the data. This might be wanted in the case were we would just read from the SD 
+card and not write to it from the arduino. Very interesting...
+
+# SD Card additional details
+
+Additionally should likely implement a method to read the SD card's CSD register in order
+to determine the size of the card beforehand. In this way we can plugin any card and determine
+it's size dynamically. Also it might be worth investigating a way to determine if the card is plugged in or not.
