@@ -36,9 +36,10 @@
  * commands for controlling the actual storage medium.
  */
 
-#define INCLUDE_FROM_SCSI_C
+#define INCLUDE_FROM_SCSI_C // ← must be first
 #include "SCSI.h"
-
+#include "Lib/DataflashManager.h"
+#include "Lib/SDcard.h"
 /** Structure to hold the SCSI response data to a SCSI INQUIRY command. This
  * gives information about the device's features and capabilities.
  */
@@ -224,8 +225,8 @@ SCSI_Command_Request_Sense(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo) {
  */
 static bool SCSI_Command_Read_Capacity_10(
     USB_ClassInfo_MS_Device_t *const MSInterfaceInfo) {
-  uint32_t LastBlockAddressInLUN = (LUN_MEDIA_BLOCKS - 1);
-  uint32_t MediaBlockSize = VIRTUAL_MEMORY_BLOCK_SIZE;
+  uint32_t LastBlockAddressInLUN = (MEMORY_BLOCKS - 1);
+  uint32_t MediaBlockSize = BLOCK_LENGTH;
 
   Endpoint_Write_Stream_BE(&LastBlockAddressInLUN,
                            sizeof(LastBlockAddressInLUN), NULL);
@@ -261,15 +262,16 @@ SCSI_Command_Send_Diagnostic(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo) {
   }
 
   /* Check to see if all attached Dataflash ICs are functional */
-  if (!(DataflashManager_CheckDataflashOperation())) {
-    /* Update SENSE key with a hardware error condition and return command fail
-     */
-    SCSI_SET_SENSE(SCSI_SENSE_KEY_HARDWARE_ERROR,
-                   SCSI_ASENSE_NO_ADDITIONAL_INFORMATION,
-                   SCSI_ASENSEQ_NO_QUALIFIER);
-
-    return false;
-  }
+  // if (!(DataflashManager_CheckDataflashOperation())) {
+  //   /* Update SENSE key with a hardware error condition and return command
+  //   fail
+  //    */
+  //   SCSI_SET_SENSE(SCSI_SENSE_KEY_HARDWARE_ERROR,
+  //                  SCSI_ASENSE_NO_ADDITIONAL_INFORMATION,
+  //                  SCSI_ASENSEQ_NO_QUALIFIER);
+  //
+  //   return false;
+  // }
 
   /* Succeed the command and update the bytes transferred counter */
   MSInterfaceInfo->State.CommandBlock.DataTransferLength = 0;
@@ -290,6 +292,66 @@ SCSI_Command_Send_Diagnostic(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo) {
  *  \return Boolean \c true if the command completed successfully, \c false
  * otherwise.
  */
+// static bool
+// SCSI_Command_ReadWrite_10_old(USB_ClassInfo_MS_Device_t *const
+// MSInterfaceInfo,
+//                               const bool IsDataRead) {
+//   uint32_t BlockAddress;
+//   uint16_t TotalBlocks;
+//
+//   /* Check if the disk is write protected or not */
+//   if ((IsDataRead == DATA_WRITE) && DISK_READ_ONLY) {
+//     /* Block address is invalid, update SENSE key and return command fail */
+//     SCSI_SET_SENSE(SCSI_SENSE_KEY_DATA_PROTECT, SCSI_ASENSE_WRITE_PROTECTED,
+//                    SCSI_ASENSEQ_NO_QUALIFIER);
+//
+//     return false;
+//   }
+//
+//   /* Load in the 32-bit block address (SCSI uses big-endian, so have to
+//   reverse
+//    * the byte order) */
+//   BlockAddress = SwapEndian_32(
+//       *(uint32_t *)&MSInterfaceInfo->State.CommandBlock.SCSICommandData[2]);
+//
+//   /* Load in the 16-bit total blocks (SCSI uses big-endian, so have to
+//   reverse
+//    * the byte order) */
+//   TotalBlocks = SwapEndian_16(
+//       *(uint16_t *)&MSInterfaceInfo->State.CommandBlock.SCSICommandData[7]);
+//
+//   /* Check if the block address is outside the maximum allowable value for
+//   the
+//    * LUN */
+//   if (BlockAddress >= LUN_MEDIA_BLOCKS) {
+//     /* Block address is invalid, update SENSE key and return command fail */
+//     SCSI_SET_SENSE(SCSI_SENSE_KEY_ILLEGAL_REQUEST,
+//                    SCSI_ASENSE_LOGICAL_BLOCK_ADDRESS_OUT_OF_RANGE,
+//                    SCSI_ASENSEQ_NO_QUALIFIER);
+//
+//     return false;
+//   }
+//
+// #if (TOTAL_LUNS > 1)
+//   /* Adjust the given block address to the real media address based on the
+//    * selected LUN */
+//   BlockAddress +=
+//       ((uint32_t)MSInterfaceInfo->State.CommandBlock.LUN * LUN_MEDIA_BLOCKS);
+// #endif
+//
+//   /* Determine if the packet is a READ (10) or WRITE (10) command, call
+//    * appropriate function */
+//   if (IsDataRead == DATA_READ)
+//     DataflashManager_ReadBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
+//   else
+//     DataflashManager_WriteBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
+//   /* Update the bytes transferred counter and succeed the command */
+//   MSInterfaceInfo->State.CommandBlock.DataTransferLength -=
+//       ((uint32_t)TotalBlocks * VIRTUAL_MEMORY_BLOCK_SIZE);
+//
+//   return true;
+// }
+
 static bool
 SCSI_Command_ReadWrite_10(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
                           const bool IsDataRead) {
@@ -305,8 +367,6 @@ SCSI_Command_ReadWrite_10(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
     return false;
   }
 
-  /* Load in the 32-bit block address (SCSI uses big-endian, so have to reverse
-   * the byte order) */
   BlockAddress = SwapEndian_32(
       *(uint32_t *)&MSInterfaceInfo->State.CommandBlock.SCSICommandData[2]);
 
@@ -315,9 +375,7 @@ SCSI_Command_ReadWrite_10(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
   TotalBlocks = SwapEndian_16(
       *(uint16_t *)&MSInterfaceInfo->State.CommandBlock.SCSICommandData[7]);
 
-  /* Check if the block address is outside the maximum allowable value for the
-   * LUN */
-  if (BlockAddress >= LUN_MEDIA_BLOCKS) {
+  if (BlockAddress >= MEMORY_BLOCKS) {
     /* Block address is invalid, update SENSE key and return command fail */
     SCSI_SET_SENSE(SCSI_SENSE_KEY_ILLEGAL_REQUEST,
                    SCSI_ASENSE_LOGICAL_BLOCK_ADDRESS_OUT_OF_RANGE,
@@ -325,23 +383,13 @@ SCSI_Command_ReadWrite_10(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
 
     return false;
   }
-
-#if (TOTAL_LUNS > 1)
-  /* Adjust the given block address to the real media address based on the
-   * selected LUN */
-  BlockAddress +=
-      ((uint32_t)MSInterfaceInfo->State.CommandBlock.LUN * LUN_MEDIA_BLOCKS);
-#endif
-
-  /* Determine if the packet is a READ (10) or WRITE (10) command, call
-   * appropriate function */
   if (IsDataRead == DATA_READ)
-    DataflashManager_ReadBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
-  else
-    DataflashManager_WriteBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
+    SDCard_ReadBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
+  // else
+  //   DataflashManager_WriteBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
   /* Update the bytes transferred counter and succeed the command */
   MSInterfaceInfo->State.CommandBlock.DataTransferLength -=
-      ((uint32_t)TotalBlocks * VIRTUAL_MEMORY_BLOCK_SIZE);
+      ((uint32_t)TotalBlocks * BLOCK_LENGTH);
 
   return true;
 }

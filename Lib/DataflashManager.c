@@ -37,9 +37,14 @@
  * these will need to be generated.
  */
 
+#include "LUFA/Drivers/USB/Class/MassStorageClass.h"
+#include "LUFA/Drivers/USB/USB.h"
+#include "Lib/SDcard.h"
+#include "Lib/SPI.h"
+#include <stdint.h>
 #define INCLUDE_FROM_DATAFLASHMANAGER_C
 #include "DataflashManager.h"
-
+uint8_t USB_READ_ERR = 0;
 /** Writes blocks (OS blocks, not Dataflash pages) to the storage medium, the
  * board Dataflash IC(s), from the pre-selected data OUT endpoint. This routine
  * reads in OS sized blocks from the endpoint and writes them to the Dataflash
@@ -184,14 +189,112 @@ void DataflashManager_WriteBlocks(
   /* Deselect all Dataflash chips */
   Dataflash_DeselectChip();
 }
+static uint8_t block_buf[BLOCK_LENGTH];
+void SDCard_ReadBlocks(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
+                       const uint32_t BlockAddress, uint16_t TotalBlocks) {
+  uint32_t CurrDFPageByte = (BlockAddress * BLOCK_LENGTH);
+  uint16_t CurrDFPageByteDiv16 = (CurrDFPageByte >> 4);
+  TC_SS_HIGH();
+  SPI_Transfer(0xFF); // dummy byte to release card state machine
+  TC_SS_LOW();
+  SPI_Transfer(0xFF);
+  uint8_t response =
+      Send_SDC_CMD(CM18, SD_IS_SDHC ? BlockAddress : CurrDFPageByte, NULL);
+  if (response) {
+    SD_ERROR = CM18;
+    return;
+  }
 
+  uint16_t tries = 0;
+
+  while (TotalBlocks) {
+
+    for (; tries < 0xFFFF; tries++) {
+      response = SPI_Transfer(0xFF);
+      if (response != 0xFF)
+        break;
+    }
+    if (!(tries < 0xFFFF)) {
+      SD_ERROR = TIMEOUT;
+      // return response;
+    } else if (response != 0xFE) {
+      SD_ERROR = MID_TRANSFER_ERR;
+      break;
+      // return response;
+    }
+
+    for (int index = 0; index < 512; index++)
+      block_buf[index] = SPI_Transfer(0xFF);
+
+    SPI_Transfer(0xFF);
+    SPI_Transfer(0xFF);
+    uint8_t ErrorCode = Endpoint_Write_Stream_LE(block_buf, 512, NULL);
+    if (ErrorCode != ENDPOINT_RWSTREAM_NoError ||
+        MSInterfaceInfo->State.IsMassStoreReset) {
+      break;
+    }
+    TotalBlocks--;
+  }
+  Send_SDC_CMD(CM12, 0x00, NULL);
+  for (tries = 0; tries < 0xFFFF; tries++) {
+    response = SPI_Transfer(0xFF);
+    if (response != 0x00)
+      break;
+  }
+  if (!(tries < 0xFFFF)) {
+    SD_ERROR = TIMEOUT;
+    // return response;
+  } else if (response != 0xFE) {
+    SD_ERROR = MID_TRANSFER_ERR;
+  }
+  // return response;
+
+  TC_SS_HIGH();
+  SPI_Transfer(0xFF);
+}
+
+// void SDCard_ReadBlocks(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
+//                        const uint32_t BlockAddress, uint16_t TotalBlocks) {
+//   uint16_t crc;
+//
+//   for (uint16_t i = 0; i < TotalBlocks; i++) {
+//     // Read SD card first — no USB interaction yet
+//     uint8_t response = SDC_Read_Block(BlockAddress + i, block_buf, &crc);
+//     if (response != 0xFE) {
+//       USB_READ_ERR = MID_TRANSFER_ERR_USB;
+//       return;
+//     }
+//
+//     // Data is ready — NOW open the endpoint
+//     if (Endpoint_WaitUntilReady())
+//       return;
+//
+//     for (uint16_t j = 0; j < BLOCK_LENGTH; j++) {
+//       if (!(Endpoint_IsReadWriteAllowed())) {
+//         Endpoint_ClearIN();
+//         if (Endpoint_WaitUntilReady())
+//           return;
+//       }
+//       Endpoint_Write_8(block_buf[j]);
+//     }
+//
+//     if (MSInterfaceInfo->State.IsMassStoreReset)
+//       return;
+//   }
+//
+//   if (!(Endpoint_IsReadWriteAllowed()))
+//     Endpoint_ClearIN();
+//   TC_SS_HIGH();
+//   for (uint8_t i = 0; i < 8; i++)
+//     SPI_Transfer(0xFF);
+// }
 /** Reads blocks (OS blocks, not Dataflash pages) from the storage medium, the
  * board Dataflash IC(s), into the pre-selected data IN endpoint. This routine
- * reads in Dataflash page sized blocks from the Dataflash and writes them in OS
- * sized blocks to the endpoint.
+ * reads in Dataflash page sized blocks from the Dataflash and writes them in
+ * OS sized blocks to the endpoint.
  *
- *  \param[in] MSInterfaceInfo  Pointer to a structure containing a Mass Storage
- * Class configuration and state
+ *  \param[in] MSInterfaceInfo  Pointer to a structure containing a Mass
+ * Storage Class configuration and state
  *  \param[in] BlockAddress  Data block starting address for the read sequence
  *  \param[in] TotalBlocks   Number of blocks of data to read
  */
