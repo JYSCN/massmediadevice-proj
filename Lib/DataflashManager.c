@@ -195,7 +195,7 @@ void SDCard_ReadBlocks(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
   uint32_t CurrDFPageByte = (BlockAddress * BLOCK_LENGTH);
   uint16_t CurrDFPageByteDiv16 = (CurrDFPageByte >> 4);
   TC_SS_HIGH();
-  SPI_Transfer(0xFF); // dummy byte to release card state machine
+  SPI_Transfer(0xFF); 
   TC_SS_LOW();
   SPI_Transfer(0xFF);
   uint8_t response =

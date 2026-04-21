@@ -31,9 +31,7 @@ uint8_t crc7(uint8_t *data, int len) {
   for (int i = 0; i < len; i++) {
     uint8_t byte = data[i];
     for (int j = 0; j < 8; j++) {
-      // Check if the most significant bit (bit 6 of 7-bit CRC) will be shifted
-      // out
-      uint8_t bit = (byte >> (7 - j)) & 0x01;
+            uint8_t bit = (byte >> (7 - j)) & 0x01;
       if ((crc >> 6) ^ bit) {
         crc = ((crc << 1) ^ 0x09) & 0x7F;
       } else {
@@ -70,7 +68,7 @@ uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument,
     }
   }
 
-  // Also handle CMD58 additional output
+  
   if (indexCMD == CM58 && additionalOutput != NULL) {
     for (int index = 0; index < 4; index++) {
       additionalOutput[index] = SPI_Transfer(0xFF);
@@ -159,7 +157,7 @@ uint8_t SDC_Read_Block(uint32_t address, uint8_t *readBuffer,
   for (int i = 0; i < 8; i++)
     SPI_Transfer(0xFF);
   TC_SS_LOW();
-  SPI_Transfer(0xFF); // dummy byte after CS goes low
+  SPI_Transfer(0xFF);
   uint32_t send_address = SD_IS_SDHC ? address : address * BLOCK_LENGTH;
   uint8_t response = Send_SDC_CMD(CM17, send_address, NULL);
   if (response) {
@@ -169,7 +167,7 @@ uint8_t SDC_Read_Block(uint32_t address, uint8_t *readBuffer,
   }
   uint32_t tries = 0;
   for (; tries < 200000; tries++) {
-    response = SPI_Transfer(0xFF); // Data token
+    response = SPI_Transfer(0xFF); 
     if (response == 0xFE)
       break;
   }
@@ -190,10 +188,10 @@ uint8_t SDC_Read_Block(uint32_t address, uint8_t *readBuffer,
   }
   *crc_checksum = (SPI_Transfer(0xFF) << 8);
   *crc_checksum |= (SPI_Transfer(
-      0xFF)); // Right now just checking if it works no need to send CRC back
+      0xFF)); 
 
   TC_SS_HIGH();
-  // ← 8 trailing clocks
+  
   return response;
 }
 
