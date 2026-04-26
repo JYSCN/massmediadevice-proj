@@ -13,9 +13,4 @@ void SPI_Initialize(void) {
   TC_SS_HIGH();
 }
 
-uint8_t SPI_Transfer(uint8_t data) {
-  SPDR = data; 
-  while (!(SPSR & (1 << SPIF)))
-    ;          
-  return SPDR; 
-}
+

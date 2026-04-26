@@ -35,9 +35,13 @@
  * hardware configuration.
  */
 #include "Lib/DataflashManager.h"
+
 #include "Lib/SDcard.h"
 #include "Lib/SPI.h"
+#include "Lib/display.h"
+#include "Lib/pffconf.h"
 #include "VirtualSerialMassStorage.h"
+
 #include <stdio.h>
 
 /** LUFA CDC Class driver interface configuration and state information. This
@@ -194,9 +198,9 @@ int main(void) {
   stdout = &USBSerialStream;
   // LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
   GlobalInterruptEnable();
-
+  SD_Init();
+  draw_image_from_sd("IMAGE.BIN");
   // Run SD init before USB — results stored in SD_Debug
-  uint8_t sd_result = SD_Init();
 
   // Wait for USB to connect
   while (USB_DeviceState != DEVICE_STATE_Configured) {
@@ -232,9 +236,10 @@ int main(void) {
       PRINT("SD Error = 0x%02X, SD Error Result = 0x%02X, SD Init = 0x%02X, "
             "SD_LIB_ERROR = 0x%02X, USB_READ_ERR = 0x%02X, IS SD Card = "
             "0x%02X\r\n",
-            SD_ERROR, ERROR_RESPONSE, sd_result, SD_LIB_ERROR, USB_READ_ERR,
+            SD_ERROR, ERROR_RESPONSE, 0x00, SD_LIB_ERROR, USB_READ_ERR,
             SD_IS_SDHC);
     }
+
     SD_ERROR = 0;
     ERROR_RESPONSE = 0;
     CDC_Device_USBTask(&VirtualSerial_CDC_Interface);

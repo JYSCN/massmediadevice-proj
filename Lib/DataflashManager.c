@@ -189,7 +189,7 @@ void DataflashManager_WriteBlocks(
   /* Deselect all Dataflash chips */
   Dataflash_DeselectChip();
 }
-static uint8_t block_buf[BLOCK_LENGTH];
+
 void SDCard_ReadBlocks(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
                        const uint32_t BlockAddress, uint16_t TotalBlocks) {
   uint32_t CurrDFPageByte = (BlockAddress * BLOCK_LENGTH);
@@ -209,7 +209,7 @@ void SDCard_ReadBlocks(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,
 
   while (TotalBlocks) {
 
-    for (; tries < 0xFFFF; tries++) {
+    for (tries = 0; tries < 0xFFFF; tries++) {
       response = SPI_Transfer(0xFF);
       if (response != 0xFF)
         break;

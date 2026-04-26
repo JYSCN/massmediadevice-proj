@@ -9,6 +9,13 @@
 #define TC_SS_LOW()   PORTE &= ~(1<<SS)
 #define TC_SS_HIGH()  PORTE |= (1<<SS)
 void SPI_Initialize(void);
-uint8_t SPI_Transfer(uint8_t data);
+
+
+static inline uint8_t SPI_Transfer(uint8_t data) {
+  SPDR = data; 
+  while (!(SPSR & (1 << SPIF)))
+    ;          
+  return SPDR; 
+}
 
 #endif

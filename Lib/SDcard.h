@@ -40,5 +40,5 @@ uint8_t SD_Init(void);
 uint8_t SDC_Read_Block(uint32_t address, uint8_t *readBuffer,
                        uint16_t *crc_checksum);
 uint8_t SDC_Write_Block(uint32_t address, uint8_t *writeBuffer);
-
+extern uint8_t block_buf[BLOCK_LENGTH];
 #endif

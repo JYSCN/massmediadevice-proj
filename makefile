@@ -18,9 +18,14 @@ F_CPU        = 16000000
 F_USB        = $(F_CPU)
 OPTIMIZATION = s
 TARGET       = main
-SRC          = $(TARGET).c Descriptors.c wdt_fix.c Lib/SDcard.c Lib/SPI.c Lib/DataflashManager.c Lib/SCSI.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS)
+SRC          = $(TARGET).c Descriptors.c wdt_fix.c Lib/SDcard.c Lib/SPI.c Lib/DataflashManager.c Lib/SCSI.c Lib/display.c PetitFs/source/diskio.c PetitFs/source/pff.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS)
+U8G2_PATH = ./u8g2/csrc
+SRC += $(filter-out $(wildcard $(U8G2_PATH)/u8x8_d_*.c) $(wildcard $(U8G2_PATH)/u8g2_d_*.c), \
+       $(wildcard $(U8G2_PATH)/*.c))
+SRC += $(U8G2_PATH)/u8x8_d_ssd1306_128x64_noname.c
+SRC += ./u8g2/sys/avr/avr-libc/lib/u8x8_avr.c
 LUFA_PATH    = ./lufa/LUFA
-CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/
+CC_FLAGS     = -DUSE_LUFA_CONFIG_HEADER -IConfig/ -IPetitFs/source/ -Iu8g2/csrc/ -Iu8g2/sys/avr/avr-libc/lib/
 LD_FLAGS     =
 
 

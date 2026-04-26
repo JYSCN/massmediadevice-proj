@@ -11,7 +11,7 @@ uint8_t SD_ERROR = UNINITIALIZED;
 uint8_t SD_IS_SDHC = 0;
 uint8_t ERROR_RESPONSE = 0;
 uint8_t SD_LIB_ERROR = 0;
-
+uint8_t block_buf[BLOCK_LENGTH];
 uint16_t crc16(uint8_t *data, int len) {
   uint16_t crc = 0;
   for (int i = 0; i < len; i++) {
@@ -44,18 +44,20 @@ uint8_t crc7(uint8_t *data, int len) {
 
 uint8_t Send_SDC_CMD(uint8_t indexCMD, uint32_t argument,
                      uint8_t *additionalOutput) {
-  SPI_Transfer(indexCMD);
-  for (int index = 0; index < 4; index++) {
-    SPI_Transfer(argument >> (8 * (3 - index)));
-  }
-  uint8_t packet[5];
-  packet[0] = indexCMD;
-  packet[1] = (uint8_t)(argument >> 24);
-  packet[2] = (uint8_t)(argument >> 16);
-  packet[3] = (uint8_t)(argument >> 8);
-  packet[4] = (uint8_t)(argument);
-  uint8_t crc_value = (crc7(packet, 5) << 1) | 1;
+ 
+    uint8_t packet[5];
+    uint8_t *arg = (uint8_t *)&argument;
 
+    packet[0] = indexCMD;    
+    packet[1] = arg[3];           
+    packet[2] = arg[2];
+    packet[3] = arg[1];
+    packet[4] = arg[0];      
+  
+  for (int index = 0; index < 5; index++) {
+    SPI_Transfer(packet[index]);
+  }
+  uint8_t crc_value = (crc7(packet, 5) << 1) | 1;
   uint8_t response = SPI_Transfer(crc_value);
   for (uint16_t i = 0; i < 255; i++) {
     response = SPI_Transfer(0xFF);
