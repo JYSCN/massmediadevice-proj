@@ -106,81 +106,7 @@ USB_ClassInfo_MS_Device_t Disk_MS_Interface = {
     CDC_Device_Flush(&VirtualSerial_CDC_Interface);                            \
   } while (0)
 
-// void Test_Read_Block(uint32_t address) {
-//
-//   uint16_t crc = 0;
-//
-//   printf("Reading block at address 0x%08lX...\r\n", address);
-//
-//   uint8_t response = SDC_Read_Block(address, sd_block_buffer, &crc);
-//
-//   if (response != 0xFE) {
-//     printf("Read failed! Response: 0x%02X  SD_ERROR: 0x%02X\r\n", response,
-//            SD_ERROR);
-//     return;
-//   }
-//
-//   printf("CRC: 0x%04X\r\n", crc);
-//   printf("Data:\r\n");
-//
-//   // Print hex dump — 16 bytes per row
-//   for (int i = 0; i < BLOCK_LENGTH; i++) {
-//     if (i % 16 == 0)
-//       printf("\r\n%04X: ", i); // row address
-//     printf("%02X ", sd_block_buffer[i]);
-//   }
-//
-//   printf("\r\n--- End of Block ---\r\n");
-//
-//   // Flush so data actually goes out
-//   CDC_Device_Flush(&VirtualSerial_CDC_Interface);
-// }
-//
-// // Read a string from USB serial until newline
-// static void USB_ReadLine(char *buf, uint8_t maxlen) {
-//   uint8_t i = 0;
-//   while (i < maxlen - 1) {
-//     // Wait for a byte
-//     while (!CDC_Device_BytesReceived(&VirtualSerial_CDC_Interface)) {
-//       CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
-//       USB_USBTask();
-//     }
-//     char c = CDC_Device_ReceiveByte(&VirtualSerial_CDC_Interface);
-//
-//     // Echo character back so user can see what they type
-//     printf("%c", c);
-//     CDC_Device_Flush(&VirtualSerial_CDC_Interface);
-//
-//     if (c == '\r' || c == '\n')
-//       break;
-//     buf[i++] = c;
-//   }
-//   buf[i] = '\0';
-// }
-//
-// void SD_CommandLoop(void) {
-//   char input[16];
-//
-//   // Reset card state before every command
-//   TC_SS_HIGH();
-//   for (int i = 0; i < 8; i++)
-//     SPI_Transfer(0xFF); // 8 dummy bytes to fully flush card state
-//
-//   printf("\r\nEnter block address (hex, e.g. 0A3F): ");
-//   CDC_Device_Flush(&VirtualSerial_CDC_Interface);
-//
-//   USB_ReadLine(input, sizeof(input));
-//
-//   uint32_t address = 0;
-//   if (sscanf(input, "%lx", &address) != 1) {
-//     printf("\r\nInvalid address.\r\n");
-//     CDC_Device_Flush(&VirtualSerial_CDC_Interface);
-//     return;
-//   }
-//
-//   printf("\r\n");
-//   Test_Read_Block(address);
-// }
+
 
 /** Standard file stream for the CDC interface when set up, so that the virtual
  * CDC COM port can be used like any regular character stream in the C APIs.
@@ -208,22 +134,7 @@ int main(void) {
     USB_USBTask();
   }
 
-  // Small delay to let the terminal open
 
-  // Now dump everything we captured
-  // PRINT("=== SD Init Debug ===\r\n");
-  // PRINT("CMD0:   0x%02X\r\n", SD_Debug.cmd0);
-  // PRINT("CMD8:   0x%02X  OCR: %02X %02X %02X %02X\r\n", SD_Debug.cmd8,
-  //       SD_Debug.cmd8_ocr[0], SD_Debug.cmd8_ocr[1], SD_Debug.cmd8_ocr[2],
-  //       SD_Debug.cmd8_ocr[3]);
-  // PRINT("ACMD41: 0x%02X  tries: %d\r\n", SD_Debug.acmd41,
-  //       SD_Debug.acmd41_tries);
-  // PRINT("CMD58:  0x%02X  SDHC: %d  OCR: %02X %02X %02X %02X\r\n",
-  //       SD_Debug.cmd58, SD_IS_SDHC, SD_Debug.cmd58_ocr[0],
-  //       SD_Debug.cmd58_ocr[1], SD_Debug.cmd58_ocr[2], SD_Debug.cmd58_ocr[3]);
-  // PRINT("CMD16:  0x%02X\r\n", SD_Debug.cmd16);
-  // PRINT("Init result: 0x%02X\r\n", sd_result);
-  // PRINT("=====================\r\n");
   CDC_Device_Flush(&VirtualSerial_CDC_Interface);
 
   for (;;) {

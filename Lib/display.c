@@ -4,14 +4,8 @@
 #include <stdint.h>
 #include <u8x8.h>
 
-// For software I2C - adjust pins for your ATmega32u4 wiring
-#define I2C_CLK_DIR DDRD
-#define I2C_CLK_PORT PORTD
-#define I2C_CLK_PIN 0
 
-#define I2C_DATA_DIR DDRD
-#define I2C_DATA_PORT PORTD
-#define I2C_DATA_PIN 1
+
 
 uint8_t u8x8_gpio_and_delay_atmega32u4(u8x8_t *u8x8, uint8_t msg,
                                        uint8_t arg_int, void *arg_ptr) {

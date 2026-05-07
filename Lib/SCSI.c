@@ -279,78 +279,7 @@ SCSI_Command_Send_Diagnostic(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo) {
   return true;
 }
 
-/** Command processing for an issued SCSI READ (10) or WRITE (10) command. This
- * command reads in the block start address and total number of blocks to
- * process, then calls the appropriate low-level Dataflash routine to handle the
- * actual reading and writing of the data.
- *
- *  \param[in] MSInterfaceInfo  Pointer to the Mass Storage class interface
- * structure that the command is associated with
- *  \param[in] IsDataRead  Indicates if the command is a READ (10) command or
- * WRITE (10) command (DATA_READ or DATA_WRITE)
- *
- *  \return Boolean \c true if the command completed successfully, \c false
- * otherwise.
- */
-// static bool
-// SCSI_Command_ReadWrite_10_old(USB_ClassInfo_MS_Device_t *const
-// MSInterfaceInfo,
-//                               const bool IsDataRead) {
-//   uint32_t BlockAddress;
-//   uint16_t TotalBlocks;
-//
-//   /* Check if the disk is write protected or not */
-//   if ((IsDataRead == DATA_WRITE) && DISK_READ_ONLY) {
-//     /* Block address is invalid, update SENSE key and return command fail */
-//     SCSI_SET_SENSE(SCSI_SENSE_KEY_DATA_PROTECT, SCSI_ASENSE_WRITE_PROTECTED,
-//                    SCSI_ASENSEQ_NO_QUALIFIER);
-//
-//     return false;
-//   }
-//
-//   /* Load in the 32-bit block address (SCSI uses big-endian, so have to
-//   reverse
-//    * the byte order) */
-//   BlockAddress = SwapEndian_32(
-//       *(uint32_t *)&MSInterfaceInfo->State.CommandBlock.SCSICommandData[2]);
-//
-//   /* Load in the 16-bit total blocks (SCSI uses big-endian, so have to
-//   reverse
-//    * the byte order) */
-//   TotalBlocks = SwapEndian_16(
-//       *(uint16_t *)&MSInterfaceInfo->State.CommandBlock.SCSICommandData[7]);
-//
-//   /* Check if the block address is outside the maximum allowable value for
-//   the
-//    * LUN */
-//   if (BlockAddress >= LUN_MEDIA_BLOCKS) {
-//     /* Block address is invalid, update SENSE key and return command fail */
-//     SCSI_SET_SENSE(SCSI_SENSE_KEY_ILLEGAL_REQUEST,
-//                    SCSI_ASENSE_LOGICAL_BLOCK_ADDRESS_OUT_OF_RANGE,
-//                    SCSI_ASENSEQ_NO_QUALIFIER);
-//
-//     return false;
-//   }
-//
-// #if (TOTAL_LUNS > 1)
-//   /* Adjust the given block address to the real media address based on the
-//    * selected LUN */
-//   BlockAddress +=
-//       ((uint32_t)MSInterfaceInfo->State.CommandBlock.LUN * LUN_MEDIA_BLOCKS);
-// #endif
-//
-//   /* Determine if the packet is a READ (10) or WRITE (10) command, call
-//    * appropriate function */
-//   if (IsDataRead == DATA_READ)
-//     DataflashManager_ReadBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
-//   else
-//     DataflashManager_WriteBlocks(MSInterfaceInfo, BlockAddress, TotalBlocks);
-//   /* Update the bytes transferred counter and succeed the command */
-//   MSInterfaceInfo->State.CommandBlock.DataTransferLength -=
-//       ((uint32_t)TotalBlocks * VIRTUAL_MEMORY_BLOCK_SIZE);
-//
-//   return true;
-// }
+
 
 static bool
 SCSI_Command_ReadWrite_10(USB_ClassInfo_MS_Device_t *const MSInterfaceInfo,

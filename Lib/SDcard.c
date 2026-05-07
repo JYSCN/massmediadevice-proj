@@ -18,7 +18,7 @@ uint16_t crc16(uint8_t *data, int len) {
     crc ^= (uint16_t)data[i] << 8;
     for (int j = 0; j < 8; j++) {
       if (crc & 0x8000)
-        crc = (crc << 1) ^ 0x1021; // Polynomial 0x1021
+        crc = (crc << 1) ^ 0x1021; 
       else
         crc <<= 1;
     }
